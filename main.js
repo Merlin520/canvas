@@ -1,46 +1,29 @@
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
 
-var painting = false;
-var lastPoint = {x:undefined,y:undefined};
+autoSetCanvasSize(canvas);
 
-canvas.onmousedown = function (a) {
-    painting = true;
-    var x = a.clientX;
-    var y = a.clientY;
-    lastPoint = {'x':x,'y':y};
-    drawCircle(x,y,1)
+listenToMouse(canvas);
+
+
+
+
+
+
+//橡皮擦是否开启
+var eraserEnable = false;
+// eraser.onclick = function () {
+//     eraserEnable = !eraserEnable;//如果开启，点击即关闭，反之亦然
+// };
+eraser.onclick = function () {
+    eraserEnable = true;
+    actions.className = 'actions x';
 };
 
-canvas.onmousemove = function (a) {
-    if(painting){
-        var x = a.clientX;
-        var y = a.clientY;
-        var newPoint = {'x':x,'y':y};
-        drawCircle(x,y,1);
-        drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
-        lastPoint = newPoint;
-    }
+brush.onclick = function () {
+    eraserEnable = false;
+    actions.className = 'actions';
 };
-
-canvas.onmouseup = function (a) {
-    painting = false;
-};
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //画圆函数
@@ -61,4 +44,55 @@ function drawLine(x1,y1,x2,y2) {
     context.lineTo(x2,y2);
     context.stroke();
     context.closePath();
+}
+
+function autoSetCanvasSize() {
+    setCanvasView();
+    function setCanvasView() {//获取页面
+        var pageWidth = document.documentElement.clientWidth;
+        var pageHeight = document.documentElement.clientHeight;
+        canvas.width = pageWidth;
+        canvas.height = pageHeight;
+    }
+    window.onresize = function () {
+        setCanvasView();
+    };
+}
+
+function listenToMouse(canvas){
+
+    var using = false;
+    var lastPoint = {x:undefined,y:undefined};
+
+    canvas.onmousedown = function (a) {
+        var x = a.clientX;
+        var y = a.clientY;
+        using = true;
+        // drawCircle(x,y,1)
+        if(eraserEnable){
+            context.clearRect(x-5,y-5,10,10)//橡皮擦
+        }else {
+            var x = a.clientX;
+            var y = a.clientY;
+            lastPoint = {'x':x,'y':y};
+        }
+    };
+
+    canvas.onmousemove = function (a) {
+        var x = a.clientX;
+        var y = a.clientY;
+         if(!using){ return }
+         if(eraserEnable){
+                context.clearRect(x-5,y-5,10,10)
+        }else {
+                var newPoint = {'x':x,'y':y};
+                // drawCircle(x,y,1);
+                drawLine(lastPoint.x,lastPoint.y,newPoint.x,newPoint.y);
+                lastPoint = newPoint;
+        }
+    };
+
+    canvas.onmouseup = function (a) {
+        using = false;
+    };
 }
