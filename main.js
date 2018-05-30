@@ -73,6 +73,9 @@ blue.onclick = function () {
     black.classList.remove('active')
 };
 
+clear.onclick = function () {
+    context.clearRect(0,0,canvas.width,canvas.height);
+};
 
 thin.onclick = function () {
     lineWidth = 2
