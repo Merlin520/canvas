@@ -77,6 +77,16 @@ clear.onclick = function () {
     context.clearRect(0,0,canvas.width,canvas.height);
 };
 
+download.onclick = function () {
+    var url = canvas.toDataURL('image/png');
+    var a = document.createElement('a');
+    document.body.appendChild(a);
+    a.href = url;
+    a.download = 'canvas';
+    a.target = '_blank';
+    a.click()
+};
+
 thin.onclick = function () {
     lineWidth = 2
 };
