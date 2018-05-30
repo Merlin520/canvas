@@ -1,6 +1,6 @@
 var canvas = document.getElementById('canvas');
 var context = canvas.getContext('2d');
-
+var lineWidth = 2;
 autoSetCanvasSize(canvas);
 
 listenToUser(canvas);
@@ -37,13 +37,22 @@ eraser.onclick = function () {
 };
 
 
+black.onclick = function () {
+    context.fillStyle = 'black';
+    context.strokeStyle = 'black';
+    black.classList.add('active');
+    red.classList.remove('active');
+    green.classList.remove('active');
+    blue.classList.remove('active')
+};
 
 red.onclick = function () {
     context.fillStyle = 'red';
     context.strokeStyle = 'red';
     red.classList.add('active');
     green.classList.remove('active');
-    blue.classList.remove('active')
+    blue.classList.remove('active');
+    black.classList.remove('active')
 };
 
 green.onclick = function () {
@@ -51,7 +60,8 @@ green.onclick = function () {
     context.strokeStyle = 'green';
     red.classList.remove('active');
     green.classList.add('active');
-    blue.classList.remove('active')
+    blue.classList.remove('active');
+    black.classList.remove('active')
 };
 
 blue.onclick = function () {
@@ -59,11 +69,22 @@ blue.onclick = function () {
     context.strokeStyle = 'blue';
     red.classList.remove('active');
     blue.classList.add('active');
-    green.classList.remove('active')
+    green.classList.remove('active');
+    black.classList.remove('active')
 };
 
 
+thin.onclick = function () {
+    lineWidth = 2
+};
 
+mid.onclick = function () {
+    lineWidth = 4
+};
+
+thick.onclick = function () {
+    lineWidth = 6
+};
 
 //画圆函数
 function drawCircle(x,y,radius) {
@@ -79,7 +100,7 @@ function drawLine(x1,y1,x2,y2) {
     context.beginPath();
     // context.strokeStyle = 'red';
     context.moveTo(x1,y1);
-    context.lineWidth = 5;
+    context.lineWidth = lineWidth;
     context.lineTo(x2,y2);
     context.stroke();
     context.closePath();
