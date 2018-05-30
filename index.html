@@ -3,16 +3,26 @@
 <head>
     <link rel="stylesheet" href="./style.css">
     <meta charset="UTF-8">
+    <script src="//at.alicdn.com/t/font_688014_jis4enryv6yr2j4i.js"></script>
     <meta name="viewport" content="width=device-width; initial-scale=1.0;maximum-scale=1.0;minimum-scale=1.0; user-scalable=no;" />
     <title>canvas</title>
 </head>
 <body>
     <canvas id="canvas" width="300" height="400"></canvas>
     <div id="actions" class="actions">
-        <button id="eraser">橡皮擦</button>
-        <button id="brush">画笔</button>
+        <svg id="pen" class="icon active" >
+            <use xlink:href="#icon-Pen"></use>
+        </svg>
+        <svg id="eraser" class="icon" >
+            <use xlink:href="#icon-eraser"></use>
+        </svg>
     </div>
 
+    <ol class="colors">
+        <li id="red" class="red active"></li>
+        <li id="green" class="green"></li>
+        <li id="blue" class="blue"></li>
+    </ol>
 
 
 
